@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lalit Official Earning Hub | Free Rewards & Gaming Tools</title>
+    <meta name="google-site-verification" content="axj32h3OvYw0Eb5VsNk6oW3hll5aZd1mcVExZdZVkKU" />
     <meta name="description" content="Lalit Official Earning Hub - Get daily Free Fire MAX redeem codes, BGMI updates, spin to win rewards, and premium online tools.">
     <meta name="keywords" content="Lalit Official Earning Hub, free fire redeem codes, bgmi updates, spin and win online, daily rewards lalit bohara, free earning tools">
     <meta name="author" content="Lalit Bohara">
@@ -15,9 +16,9 @@
         .btn { display: inline-block; background: #00ff88; color: #0c0f12; padding: 14px 28px; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 15px 0; transition: 0.3s; border: none; cursor: pointer; font-size: 1.1rem; width: 100%; max-width: 250px; }
         .btn:hover { background: #00b362; transform: scale(1.02); }
         
-        /* Fixed Spin Wheel Style */
+        /* Spin Wheel Style */
         .wheel-box { margin: 30px 0; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px dashed #00ff88; }
-        .wheel-container { position: relative; width: 280px; height: 280px; margin: 20px auto; }
+        .wheel-container { position: relative; width: 260px; height: 260px; margin: 20px auto; }
         canvas { display: block; width: 100%; height: 100%; }
         
         .pointer { 
@@ -49,7 +50,7 @@
         <h1>Lalit Official Earning Hub 🚀</h1>
         <p class="subtitle">Get daily game rewards and premium tools instantly</p>
         
-        <!-- Re-Engineered Real Spin Wheel Section -->
+        <!-- Canvas Spin Wheel Section -->
         <div class="wheel-box">
             <h3 style="color: #00ff88; margin-top:0;">🎰 Spin & Win Earning Tool</h3>
             <p style="color: #8892b0; font-size: 0.95rem;">Try your luck daily to win diamonds, points, or cash rewards!</p>
@@ -116,7 +117,6 @@
             const cy = 150;
             const r = 135;
             
-            // Outer white ring
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 6;
             ctx.beginPath();
@@ -132,7 +132,6 @@
                 ctx.lineTo(cx, cy);
                 ctx.fill();
 
-                // Draw Text Perfectly inside slices
                 ctx.save();
                 ctx.fillStyle = "#ffffff";
                 ctx.font = "bold 15px Arial";
