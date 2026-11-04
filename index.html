@@ -19,7 +19,6 @@
         .wheel-box { margin: 30px 0; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px dashed #00ff88; }
         .wheel-container { position: relative; width: 260px; height: 260px; margin: 20px auto; }
         
-        /* High Quality Colored Wheel with Text Inside */
         .wheel { 
             width: 100%; 
             height: 100%; 
@@ -37,7 +36,6 @@
             transition: transform 4s cubic-bezier(0.1, 0.8, 0.3, 1); 
         }
         
-        /* Labels inside the wheel sections */
         .segment-text {
             position: absolute;
             width: 50%;
@@ -52,7 +50,6 @@
             font-size: 0.85rem;
             color: #fff;
             text-shadow: 1px 1px 3px #000;
-            box-sizing: border-radius;
         }
         .seg1 { transform: rotate(45deg) translate(35px, 35px); }
         .seg2 { transform: rotate(135deg) translate(35px, 35px); }
@@ -84,7 +81,6 @@
             <div class="wheel-container">
                 <div class="pointer"></div>
                 <div id="wheel" class="wheel">
-                    <!-- Text written inside the wheel slices -->
                     <div class="segment-text seg1">500 Pts</div>
                     <div class="segment-text seg2">50💎</div>
                     <div class="segment-text seg3">₹20 Cash</div>
@@ -130,7 +126,6 @@
     </div>
 
     <script>
-        // Spin Wheel Script
         let canSpin = true;
         function spinWheel() {
             if (!canSpin) return;
@@ -139,12 +134,10 @@
             const resultText = document.getElementById("spinResult");
             resultText.innerText = "Spinning...";
             
-            // Random spin angle
             const randomDegrees = Math.floor(Math.random() * 360) + 1800; 
             wheel.style.transform = `rotate(${randomDegrees}deg)`;
             
             setTimeout(() => {
-                // Calculate landing position relative to the pointer at top (270 deg offset adjustment)
                 const actualDegrees = (randomDegrees + 270) % 360;
                 let reward = "";
                 
