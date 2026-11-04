@@ -1,1 +1,134 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Lalit Gaming & Utility Hub</title><style>body { font-family: "Segoe UI", sans-serif; background: #121212; color: #fff; text-align: center; margin: 0; padding: 20px; } .container { max-width: 600px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); } h1 { color: #00ff88; } canvas { background: #000; border: 2px solid #00ff88; display: block; margin: 20px auto; border-radius: 8px; } input, button { padding: 10px; margin: 10px; border-radius: 6px; border: none; font-size: 16px; } button { background: #00ff88; color: #121212; font-weight: bold; cursor: pointer; } button:hover { background: #00b362; }</style></head><body><div class="container"><h1>Lalit Official Earning Hub 🚀</h1><p>Play games and use premium tools below!</p><hr style="border-color:#333;"><h3>🎮 Play Snake Game</h3><p>Use On-Screen Buttons or Keyboard arrows to turn.</p><canvas id="gameCanvas" width="300" height="300"></canvas><br><button onclick="changeDir(\x27up\x27\x2gt;Up</button><br><button onclick="changeDir(\x27left\x27\x2gt;Left</button><button onclick="changeDir(\x27right\x27\x2gt;Right</button><br><button onclick="changeDir(\x27down\x27\x2gt;Down</button><hr style="border-color:#333;"><h3>🛠️ Premium Age Calculator</h3><input type="date" id="birthdate"><br><button onclick="calcAge(\x2gt;Calculate Age</button><p id="ageResult" style="color:#00ff88; font-weight:bold;"></p></div><script>const canvas=document.getElementById("gameCanvas"),ctx=canvas.getContext("2d");let box=20,snake=[{x:100,y:100}],food={x:Math.floor(Math.random()*15)*box,y:Math.floor(Math.random()*15)*box},d="right";function changeDir(dir){if(dir=="left"&&d!="right")d="left";if(dir=="up"&&d!="down")d="up";if(dir=="right"&&d!="left")d="right";if(dir=="down"&&d!="up")d="down"}function draw(){ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);for(let i=0;i<snake.length;i++){ctx.fillStyle=i==0?"#00ff88":"#00b362";ctx.fillRect(snake[i].x,snake[i].y,box,box)}ctx.fillStyle="red";ctx.fillRect(food.x,food.y,box,box);let snakeX=snake[0].x,snakeY=snake[0].y;if(d=="left")snakeX-=box;if(d=="up")snakeY-=box;if(d=="right")snakeX+=box;if(d=="down")snakeY+=box;if(snakeX==food.x&&snakeY==food.y){food={x:Math.floor(Math.random()*15)*box,y:Math.floor(Math.random()*15)*box}}else{snake.pop()}let newHead={x:snakeX,y:snakeY};if(snakeX<0||snakeX>=canvas.width||snakeY<0||snakeY>=canvas.height||collision(newHead,snake)){clearInterval(game);alert("Game Over! Refresh to restart.")}snake.unshift(newHead)}function collision(head,array){for(let i=0;i<array.length;i++){if(head.x==array[i].x&&head.y==array[i].y)return true}return false}let game=setInterval(draw,150);function calcAge(){const dob=new Date(document.getElementById("birthdate").value);if(!dob)return;const diff=Date.now()-dob.getTime(),ageDate=new Date(diff);document.getElementById("ageResult").innerText="Your Age: "+Math.abs(ageDate.getUTCFullYear()-1970)+" Years";}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lalit Official Earning Hub & Gaming Hub</title>
+    <meta name="description" content="Lalit Official Earning Hub - Play free online snake game, use premium utility tools, age calculator, and get latest gaming updates and redeem codes.">
+    <meta name="keywords" content="Lalit Official Earning Hub, free snake game online, age calculator tool, online gaming hub, redeem codes website, free tools lalit bohara">
+    <meta name="author" content="Lalit Bohara">
+    <style>
+        body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; text-align: center; background: #121212; color: #ffffff; margin: 0; padding: 20px; font-size: 1.1rem; }
+        h1 { color: #00ff88; font-size: 2.5rem; }
+        p { color: #bbb; font-size: 1.1rem; }
+        .container { max-width: 600px; margin: auto; background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); }
+        .btn { display: inline-block; background: #00ff88; color: #121212; padding: 12px 24px; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 10px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn:hover { background: #00b362; transform: scale(1.05); }
+        .game-box { margin-top: 30px; border: 2px dashed #00ff88; padding: 20px; border-radius: 8px; }
+        canvas { background: #000; display: block; margin: 20px auto; border: 2px solid #00ff88; }
+        .calc-box { margin-top: 30px; background: #252525; padding: 20px; border-radius: 8px; border: 1px solid #333; }
+        input[type="date"] { padding: 10px; border-radius: 6px; border: 1px solid #00ff88; background: #121212; color: #fff; font-size: 1rem; margin-top: 10px; }
+        .seo-content { text-align: left; margin-top: 40px; padding: 15px; background: #1a1a1a; border-radius: 8px; border-left: 4px solid #00ff88; }
+        .seo-content h2, .seo-content h3 { color: #00ff88; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lalit Official Earning Hub 🚀</h1>
+        <p>Play games and use premium tools below!</p>
+        
+        <div class="game-box">
+            <h3>🎮 Play Snake Game</h3>
+            <p>Use Keyboard arrows to turn.</p>
+            <canvas id="gameCanvas" width="300" height="300"></canvas>
+        </div>
+
+        <div class="calc-box">
+            <h3>🛠️ Premium Age Calculator</h3>
+            <p>Enter your birthdate to calculate your exact age:</p>
+            <input type="date" id="birthdate">
+            <br><br>
+            <button class="btn" onclick="calcAge()">Calculate Age</button>
+            <p id="ageResult" style="font-weight: bold; color: #00ff88; margin-top: 15px;"></p>
+        </div>
+
+        <!-- SEO Content Section for Google Search -->
+        <div class="seo-content">
+            <h2>Latest Gaming News & Redeem Codes</h2>
+            <p>Welcome to Lalit Official Hub. Here we share the latest updates on mobile gaming, including <strong>Free Fire MAX special airdrops, redeem codes, and BGMI updates</strong>. Stay tuned for upcoming premium tools, online earning tips, and exciting rewards!</p>
+            
+            <h3>How to Play Snake Game on Mobile?</h3>
+            <p>Move the snake, collect the food points (red blocks), and avoid hitting the walls. It is a fully responsive mobile-friendly HTML5 game built by Lalit Bohara.</p>
+        </div>
+    </div>
+
+    <script>
+        // Snake Game Script
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        let box = 20;
+        let snake = [{x: 100, y: 100}];
+        let food = {
+            x: Math.floor(Math.random() * 14 + 1) * box,
+            y: Math.floor(Math.random() * 14 + 1) * box
+        };
+        let d = "right";
+
+        document.addEventListener("keydown", direction);
+        function direction(event) {
+            if(event.keyCode == 37 && d != "right") d = "left";
+            else if(event.keyCode == 38 && d != "down") d = "up";
+            else if(event.keyCode == 39 && d != "left") d = "right";
+            else if(event.keyCode == 40 && d != "up") d = "down";
+        }
+
+        function draw() {
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for(let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i == 0) ? "#00ff88" : "#00b362";
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+            }
+
+            ctx.fillStyle = "red";
+            ctx.fillRect(food.x, food.y, box, box);
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+
+            if(d == "left") snakeX -= box;
+            if(d == "up") snakeY -= box;
+            if(d == "right") snakeX += box;
+            if(d == "down") snakeY += box;
+
+            if(snakeX == food.x && snakeY == food.y) {
+                food = {
+                    x: Math.floor(Math.random() * 14 + 1) * box,
+                    y: Math.floor(Math.random() * 14 + 1) * box
+                };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if(snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(game);
+                alert("Game Over! Refresh the page to restart.");
+            }
+
+            snake.unshift(newHead);
+        }
+
+        function collision(head, array) {
+            for(let i = 0; i < array.length; i++) {
+                if(head.x == array[i].x && head.y == array[i].y) return true;
+            }
+            return false;
+        }
+
+        let game = setInterval(draw, 150);
+
+        // Age Calculator Script
+        function calcAge() {
+            const dob = document.getElementById("birthdate").value;
+            if(!dob) return;
+            const diff = Date.now() - new Date(dob).getTime();
+            const ageDate = new Date(diff);
+            const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+            document.getElementById("ageResult").innerText = "Your Age: " + age + " Years";
+        }
+    </script>
+</body>
+</html>
