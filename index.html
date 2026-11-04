@@ -15,48 +15,24 @@
         .btn { display: inline-block; background: #00ff88; color: #0c0f12; padding: 14px 28px; font-weight: bold; text-decoration: none; border-radius: 8px; margin: 15px 0; transition: 0.3s; border: none; cursor: pointer; font-size: 1.1rem; width: 100%; max-width: 250px; }
         .btn:hover { background: #00b362; transform: scale(1.02); }
         
-        /* Spin Wheel Style */
+        /* Fixed Spin Wheel Style */
         .wheel-box { margin: 30px 0; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px dashed #00ff88; }
-        .wheel-container { position: relative; width: 260px; height: 260px; margin: 20px auto; }
+        .wheel-container { position: relative; width: 280px; height: 280px; margin: 20px auto; }
+        canvas { display: block; width: 100%; height: 100%; }
         
-        .wheel { 
-            width: 100%; 
-            height: 100%; 
-            border-radius: 50%; 
-            border: 6px solid #ffffff; 
-            box-shadow: 0 0 20px rgba(0,255,136,0.5); 
-            background: conic-gradient(
-                #ff3366 0deg 90deg, 
-                #3399ff 90deg 180deg, 
-                #ffcc00 180deg 270deg, 
-                #00ff88 270deg 360deg
-            ); 
-            position: relative;
-            overflow: hidden;
-            transition: transform 4s cubic-bezier(0.1, 0.8, 0.3, 1); 
+        .pointer { 
+            position: absolute; 
+            top: -10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 0; 
+            height: 0; 
+            border-left: 16px solid transparent; 
+            border-right: 16px solid transparent; 
+            border-top: 28px solid #ffffff; 
+            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.6)); 
+            z-index: 10; 
         }
-        
-        .segment-text {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: 100% 100%;
-            left: 0;
-            top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 0.85rem;
-            color: #fff;
-            text-shadow: 1px 1px 3px #000;
-        }
-        .seg1 { transform: rotate(45deg) translate(35px, 35px); }
-        .seg2 { transform: rotate(135deg) translate(35px, 35px); }
-        .seg3 { transform: rotate(225deg) translate(35px, 35px); }
-        .seg4 { transform: rotate(315deg) translate(35px, 35px); }
-
-        .pointer { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #ffffff; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); z-index: 10; }
         
         /* Table Style */
         .table-box { margin-top: 35px; text-align: left; }
@@ -73,23 +49,18 @@
         <h1>Lalit Official Earning Hub 🚀</h1>
         <p class="subtitle">Get daily game rewards and premium tools instantly</p>
         
-        <!-- Spin and Win Section -->
+        <!-- Re-Engineered Real Spin Wheel Section -->
         <div class="wheel-box">
             <h3 style="color: #00ff88; margin-top:0;">🎰 Spin & Win Earning Tool</h3>
             <p style="color: #8892b0; font-size: 0.95rem;">Try your luck daily to win diamonds, points, or cash rewards!</p>
             
             <div class="wheel-container">
                 <div class="pointer"></div>
-                <div id="wheel" class="wheel">
-                    <div class="segment-text seg1">500 Pts</div>
-                    <div class="segment-text seg2">50💎</div>
-                    <div class="segment-text seg3">₹20 Cash</div>
-                    <div class="segment-text seg4">100 UC</div>
-                </div>
+                <canvas id="wheelCanvas" width="300" height="300"></canvas>
             </div>
             
-            <button class="btn" onclick="spinWheel()">Spin Now</button>
-            <p id="spinResult" style="font-weight: bold; color: #00ff88; margin-top: 15px; min-height: 24px;"></p>
+            <button class="btn" onclick="startSpin()">Spin Now</button>
+            <p id="spinResult" style="font-weight: bold; color: #00ff88; margin-top: 15px; min-height: 24px; font-size: 1.2rem;"></p>
         </div>
 
         <!-- Redeem Codes Section -->
@@ -126,30 +97,96 @@
     </div>
 
     <script>
-        let canSpin = true;
-        function spinWheel() {
-            if (!canSpin) return;
-            canSpin = false;
-            const wheel = document.getElementById("wheel");
-            const resultText = document.getElementById("spinResult");
-            resultText.innerText = "Spinning...";
+        const canvas = document.getElementById("wheelCanvas");
+        const ctx = canvas.getContext("2d");
+        
+        const rewards = ["500 Pts", "50 💎", "₹20 Cash", "100 UC"];
+        const colors = ["#ff3366", "#3399ff", "#ffcc00", "#00ff88"];
+        
+        let startAngle = 0;
+        const arc = Math.PI / (rewards.length / 2);
+        let spinTimeout = null;
+        let spinAngleStart = 10;
+        let spinTime = 0;
+        let spinTimeTotal = 0;
+
+        function drawWheel() {
+            ctx.clearRect(0,0,300,300);
+            const cx = 150;
+            const cy = 150;
+            const r = 135;
             
-            const randomDegrees = Math.floor(Math.random() * 360) + 1800; 
-            wheel.style.transform = `rotate(${randomDegrees}deg)`;
-            
-            setTimeout(() => {
-                const actualDegrees = (randomDegrees + 270) % 360;
-                let reward = "";
-                
-                if (actualDegrees >= 0 && actualDegrees < 90) reward = "🎁 100 BGMI UC!";
-                else if (actualDegrees >= 90 && actualDegrees < 180) reward = "⚡ 500 Bonus Points!";
-                else if (actualDegrees >= 180 && actualDegrees < 270) reward = "🔥 Free Fire 50 Diamonds!";
-                else reward = "💰 ₹20 Paytm Cash!";
-                
-                resultText.innerText = "Congratulations! You Won: " + reward;
-                canSpin = true;
-            }, 4000);
+            // Outer white ring
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 3, 0, 2 * Math.PI);
+            ctx.stroke();
+
+            for(let i = 0; i < rewards.length; i++) {
+                const angle = startAngle + i * arc;
+                ctx.fillStyle = colors[i];
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, r, angle, angle + arc, false);
+                ctx.lineTo(cx, cy);
+                ctx.fill();
+
+                // Draw Text Perfectly inside slices
+                ctx.save();
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 15px Arial";
+                ctx.shadowColor = "#000000";
+                ctx.shadowBlur = 4;
+                ctx.translate(cx + Math.cos(angle + arc / 2) * (r * 0.6), cy + Math.sin(angle + arc / 2) * (r * 0.6));
+                ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                ctx.fillText(rewards[i], -ctx.measureText(rewards[i]).width / 2, 0);
+                ctx.restore();
+            }
         }
+
+        function rotateWheel() {
+            spinTime += 30;
+            if(spinTime >= spinTimeTotal) {
+                stopRotateWheel();
+                return;
+            }
+            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+            startAngle += (spinAngle * Math.PI / 180);
+            drawWheel();
+            spinTimeout = setTimeout(rotateWheel, 30);
+        }
+
+        function startSpin() {
+            document.getElementById("spinResult").innerText = "Spinning...";
+            spinAngleStart = Math.random() * 10 + 10;
+            spinTime = 0;
+            spinTimeTotal = Math.random() * 3000 + 4000;
+            rotateWheel();
+        }
+
+        function stopRotateWheel() {
+            clearTimeout(spinTimeout);
+            const degrees = startAngle * 180 / Math.PI + 90;
+            const arcd = arc * 180 / Math.PI;
+            const index = Math.floor((360 - (degrees % 360)) / arcd) % rewards.length;
+            
+            let finalReward = rewards[index];
+            if(finalReward.includes("💎")) finalReward = "🔥 Free Fire " + finalReward;
+            else if(finalReward.includes("UC")) finalReward = "🎁 BGMI " + finalReward;
+            else if(finalReward.includes("Cash")) finalReward = "💰 Paytm " + finalReward;
+            else finalReward = "⚡ " + finalReward;
+            
+            document.getElementById("spinResult").innerText = "Congratulations! You Won: " + finalReward;
+        }
+
+        function easeOut(t, b, c, d) {
+            const ts = (t /= d) * t;
+            const tc = ts * t;
+            return b + c * (tc + -3 * ts + 3 * t);
+        }
+
+        drawWheel();
     </script>
 </body>
 </html>
