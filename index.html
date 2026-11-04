@@ -17,9 +17,49 @@
         
         /* Spin Wheel Style */
         .wheel-box { margin: 30px 0; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px dashed #00ff88; }
-        .wheel-container { position: relative; width: 200px; height: 200px; margin: 20px auto; }
-        .wheel { width: 100%; height: 100%; border-radius: 50%; border: 5px solid #ffffff; box-shadow: 0 0 15px rgba(0,255,136,0.4); background: conic-gradient(#ff3366 0% 25%, #33hhff 25% 50%, #ffcc00 50% 75%, #00ff88 75% 100%); transition: transform 4s cubic-bezier(0.1, 0.8, 0.3, 1); }
-        .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #ffffff; z-index: 10; }
+        .wheel-container { position: relative; width: 260px; height: 260px; margin: 20px auto; }
+        
+        /* High Quality Colored Wheel with Text Inside */
+        .wheel { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            border: 6px solid #ffffff; 
+            box-shadow: 0 0 20px rgba(0,255,136,0.5); 
+            background: conic-gradient(
+                #ff3366 0deg 90deg, 
+                #3399ff 90deg 180deg, 
+                #ffcc00 180deg 270deg, 
+                #00ff88 270deg 360deg
+            ); 
+            position: relative;
+            overflow: hidden;
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.3, 1); 
+        }
+        
+        /* Labels inside the wheel sections */
+        .segment-text {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px #000;
+            box-sizing: border-radius;
+        }
+        .seg1 { transform: rotate(45deg) translate(35px, 35px); }
+        .seg2 { transform: rotate(135deg) translate(35px, 35px); }
+        .seg3 { transform: rotate(225deg) translate(35px, 35px); }
+        .seg4 { transform: rotate(315deg) translate(35px, 35px); }
+
+        .pointer { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #ffffff; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); z-index: 10; }
         
         /* Table Style */
         .table-box { margin-top: 35px; text-align: left; }
@@ -29,10 +69,6 @@
         th { background-color: #1f242c; color: #00ff88; font-weight: 600; }
         td { color: #e6edf3; font-family: monospace; font-size: 1.1rem; }
         .status-active { color: #00ff88; font-weight: bold; background: rgba(0,255,136,0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.9rem; }
-
-        /* Tools Style */
-        .calc-box { margin-top: 35px; background: #0d1117; padding: 20px; border-radius: 12px; border: 1px solid #21262d; }
-        input[type="date"] { padding: 12px; border-radius: 6px; border: 1px solid #30363d; background: #161b22; color: #fff; font-size: 1rem; margin-top: 10px; width: 80%; max-width: 280px; }
     </style>
 </head>
 <body>
@@ -44,10 +80,18 @@
         <div class="wheel-box">
             <h3 style="color: #00ff88; margin-top:0;">🎰 Spin & Win Earning Tool</h3>
             <p style="color: #8892b0; font-size: 0.95rem;">Try your luck daily to win diamonds, points, or cash rewards!</p>
+            
             <div class="wheel-container">
                 <div class="pointer"></div>
-                <div id="wheel" class="wheel"></div>
+                <div id="wheel" class="wheel">
+                    <!-- Text written inside the wheel slices -->
+                    <div class="segment-text seg1">500 Pts</div>
+                    <div class="segment-text seg2">50💎</div>
+                    <div class="segment-text seg3">₹20 Cash</div>
+                    <div class="segment-text seg4">100 UC</div>
+                </div>
             </div>
+            
             <button class="btn" onclick="spinWheel()">Spin Now</button>
             <p id="spinResult" style="font-weight: bold; color: #00ff88; margin-top: 15px; min-height: 24px;"></p>
         </div>
@@ -83,15 +127,6 @@
                 </tbody>
             </table>
         </div>
-
-        <!-- Utility Tool Section -->
-        <div class="calc-box">
-            <h3 style="color: #00ff88; margin-top: 0;">🛠️ Premium Age Calculator</h3>
-            <input type="date" id="birthdate">
-            <br>
-            <button class="btn" onclick="calcAge()">Calculate Age</button>
-            <p id="ageResult" style="font-weight: bold; color: #00ff88; margin-top: 10px;"></p>
-        </div>
     </div>
 
     <script>
@@ -104,30 +139,23 @@
             const resultText = document.getElementById("spinResult");
             resultText.innerText = "Spinning...";
             
-            const randomDegrees = Math.floor(Math.random() * 360) + 1800; // Multi spins
+            // Random spin angle
+            const randomDegrees = Math.floor(Math.random() * 360) + 1800; 
             wheel.style.transform = `rotate(${randomDegrees}deg)`;
             
             setTimeout(() => {
-                const actualDegrees = randomDegrees % 360;
+                // Calculate landing position relative to the pointer at top (270 deg offset adjustment)
+                const actualDegrees = (randomDegrees + 270) % 360;
                 let reward = "";
-                if (actualDegrees >= 0 && actualDegrees < 90) reward = "⚡ 100 Bonus Points!";
-                else if (actualDegrees >= 90 && actualDegrees < 180) reward = "🔥 Free Fire 50 Diamonds!";
-                else if (actualDegrees >= 180 && actualDegrees < 270) reward = "💰 ₹20 Paytm Cash!";
-                else reward = "🎁 Premium Loot Crate!";
+                
+                if (actualDegrees >= 0 && actualDegrees < 90) reward = "🎁 100 BGMI UC!";
+                else if (actualDegrees >= 90 && actualDegrees < 180) reward = "⚡ 500 Bonus Points!";
+                else if (actualDegrees >= 180 && actualDegrees < 270) reward = "🔥 Free Fire 50 Diamonds!";
+                else reward = "💰 ₹20 Paytm Cash!";
                 
                 resultText.innerText = "Congratulations! You Won: " + reward;
                 canSpin = true;
             }, 4000);
-        }
-
-        // Age Calculator Script
-        function calcAge() {
-            const dob = document.getElementById("birthdate").value;
-            if(!dob) return;
-            const diff = Date.now() - new Date(dob).getTime();
-            const ageDate = new Date(diff);
-            const age = Math.abs(ageDate.getUTCFullYear() - 1970);
-            document.getElementById("ageResult").innerText = "Your Age: " + age + " Years";
         }
     </script>
 </body>
